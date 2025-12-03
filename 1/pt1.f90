@@ -1,4 +1,4 @@
-program day1
+program pt1
 
     use iso_fortran_env, only: iostat_end
 
@@ -36,4 +36,4 @@ program day1
     enddo
     close(io)
 
-end program day1
+end program pt1
