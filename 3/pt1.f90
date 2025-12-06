@@ -6,11 +6,11 @@ program pt1
     character(100):: line
     integer:: io, iostat, top2(2), i, num, max_jolt, line_len, total_jolt
 
-    open(newunit=io, file="input.txt", status="old", action="read")
+    open (newunit=io, file="input.txt", status="old", action="read")
 
     total_jolt = 0
     do
-        read(io, "(A)", iostat=iostat) line
+        read (io, "(A)", iostat=iostat) line
         if (iostat == iostat_end) exit
         line_len = len_trim(line)
         top2(:) = 0
@@ -23,14 +23,14 @@ program pt1
                 top2(2) = 0
             elseif (num > top2(2)) then
                 top2(2) = num
-            endif
-        enddo
+            end if
+        end do
         ! calculate max jolt for the line
         max_jolt = 10*top2(1) + top2(2)
         ! add max_jolt to total
         total_jolt = total_jolt + max_jolt
-    enddo
-    close(io)
+    end do
+    close (io)
 
     print *, total_jolt
 
@@ -38,6 +38,6 @@ contains
 
     integer function read_dig(char)
         character, intent(in):: char
-        read(char, "(I1)") read_dig
+        read (char, "(I1)") read_dig
     end function read_dig
 end program pt1

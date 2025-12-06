@@ -11,11 +11,11 @@ program pt1
     nzeros = 0  ! number of zeros
 
     ! input file with the rotations
-    open(newunit=io, file="input.txt", status="old", action="read")
+    open (newunit=io, file="input.txt", status="old", action="read")
 
     do
         ! read in the row
-        read(io, '(A)', iostat=iostat) row
+        read (io, '(A)', iostat=iostat) row
 
         ! exit once end of line reached
         if (iostat == iostat_end) then
@@ -25,15 +25,15 @@ program pt1
             ! subtract from cursor if L rotation, else add.
             sign = merge(-1, 1, row(1:1) == "L")
             ! read the distance to move the cursor.
-            read(row(2:4), "(I3)") dist
+            read (row(2:4), "(I3)") dist
             ! update cursor, circling it back to 0 if > 99.
             cursor = mod(cursor + sign*dist, 100)
             ! handle case when cursor < 0.
-            cursor = merge(100+cursor, cursor, cursor<0)
+            cursor = merge(100 + cursor, cursor, cursor < 0)
             ! update zero counter.
             nzeros = nzeros + merge(1, 0, cursor == 0)
-        endif
-    enddo
-    close(io)
+        end if
+    end do
+    close (io)
 
 end program pt1

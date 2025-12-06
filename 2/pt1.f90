@@ -11,14 +11,14 @@ program pt1
     type(prefix_suffix_t):: pf
 
     ! read in the line of content
-    open(newunit=io, file="input.txt", status="old", action="read")
+    open (newunit=io, file="input.txt", status="old", action="read")
     line = ""
     do
-        read(io, "(A)", advance="no", iostat=iostat) buffer
-        line = line // trim(buffer)
+        read (io, "(A)", advance="no", iostat=iostat) buffer
+        line = line//trim(buffer)
         if (iostat < 0) exit
-    enddo
-    close(io)
+    end do
+    close (io)
 
     ! process the content
     num = ""
@@ -30,7 +30,7 @@ program pt1
         ! find the next hyphen
         iend = index(line(istart:sz), '-')
         ! collect the number before the hyphen - accounting for iend being relative to istart
-        num1 = line(istart:istart+iend-2)
+        num1 = line(istart:istart + iend - 2)
         ! update istart
         istart = istart + iend
         ! find the second number in the range using an apostrophe
@@ -39,20 +39,20 @@ program pt1
         if (iend == 0) then
             num2 = line(istart:sz)
         else
-            num2 = line(istart:istart+iend-2)
-        endif
+            num2 = line(istart:istart + iend - 2)
+        end if
         istart = istart + iend
-        
+
         ! convert chars to ints
-        read(num1, "(I10)") rangestart
-        read(num2, "(I10)") rangeend
-        
+        read (num1, "(I10)") rangestart
+        read (num2, "(I10)") rangeend
+
         ! loop over all numbers between ranges - this could be done faster by skipping ranges but iiwii.
         do i = rangestart, rangeend
             pf = prefix_suffix(i)
             if (pf%prefix == pf%suffix) nvalid = nvalid + i
-        enddo
-    enddo
+        end do
+    end do
 
     print *, nvalid
 
@@ -62,7 +62,7 @@ contains
     integer(int64) function dec_digits(x)
         integer(int64), intent(in):: x
         character(20):: x_char
-        write(x_char, "(I20)") x
+        write (x_char, "(I20)") x
         dec_digits = int(log10(dble(x)), kind=int64) + 1_int64
     end function dec_digits
 
@@ -71,7 +71,7 @@ contains
         integer(int64), intent(in):: a
         integer(int64):: divisor
         divisor = 10_int64**(dec_digits(a)/2_int64)
-        prefix_suffix%prefix = a / divisor
+        prefix_suffix%prefix = a/divisor
         prefix_suffix%suffix = mod(a, divisor)
     end function prefix_suffix
 
